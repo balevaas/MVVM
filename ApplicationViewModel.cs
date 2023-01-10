@@ -11,7 +11,7 @@ namespace MVVM
         public ObservableCollection<Phone> Phones { get; set; }
         
         /// <summary>
-        /// Добавление нового объекта
+        /// Команда добавления нового объекта
         /// </summary>
         private RelayCommand addCommand;
         public RelayCommand AddCommand
@@ -25,6 +25,27 @@ namespace MVVM
                         Phones.Insert(0, phone);
                         SelectedPhone = phone;
                     }));
+            }
+        }
+
+        /// <summary>
+        /// Команда удаления объекта
+        /// </summary>
+        private RelayCommand removeCommand;
+        public RelayCommand RemoveCommand
+        {
+            get
+            {
+                return removeCommand ??
+                    (removeCommand = new RelayCommand(obj =>
+                    {
+                        Phone phone = obj as Phone;
+                        if (phone != null)
+                        {
+                            Phones.Remove(phone);
+                        }
+                    },
+                    (obj) => Phones.Count > 0));
             }
         }
         public Phone SelectedPhone
