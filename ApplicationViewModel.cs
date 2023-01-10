@@ -9,6 +9,24 @@ namespace MVVM
         private Phone selectedPhone;
 
         public ObservableCollection<Phone> Phones { get; set; }
+        
+        /// <summary>
+        /// Добавление нового объекта
+        /// </summary>
+        private RelayCommand addCommand;
+        public RelayCommand AddCommand
+        {
+            get
+            {
+                return addCommand ??
+                    (addCommand = new RelayCommand(obj =>
+                    {
+                        Phone phone = new Phone();
+                        Phones.Insert(0, phone);
+                        SelectedPhone = phone;
+                    }));
+            }
+        }
         public Phone SelectedPhone
         {
             get { return selectedPhone; }
